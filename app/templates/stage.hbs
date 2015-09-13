@@ -1,0 +1,75 @@
+<div class="col-md-8">
+	<h2>{{model.Name}} <small>{{model.Description}}</small></h2>
+	
+	<p>Start date: {{moment-format model.Attributes.[6].Value}}</p>
+	<p>End date: {{moment-format model.Attributes.[2].Value}}</p>
+	
+	{{#if model.DocumentationSet}}
+	<div class="panel panel-default">
+  		<div class="panel-heading">Tasks</div>
+  		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Ref</th>
+						<th>Task</th>
+						<th>Responsibility</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each model.DocumentationSet as |task|}}
+					<tr>
+						<td>{{task.Code}}</td>
+						<td>{{task.Name}}</td>
+						<td>{{responsibility task.Attributes}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{/if}}
+	
+	{{#if hasDeliverables}}
+	<div class="panel panel-default">
+  		<div class="panel-heading">Assets</div>
+  		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Classification</th>
+						<th>Deliverable</th>
+						<th>Type</th>
+						<th>Responsibility</th>
+						<th>LOD</th>
+						<th>LOI</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each model.SpaceTypes as |space|}}
+					<tr>
+						<td>{{attribute-value space.Attributes attributeName='Uniclass2015'}}</td>
+						<td>{{space.Name}}</td>
+						<td>{{attribute-value space.Attributes 'Type'}}</td>
+						<td>{{responsibility space.Attributes}}</td>
+						<td>{{space.RequiredLOD.Code}}</td>
+						<td>{{space.RequiredLOI.Code}}</td>
+					</tr>
+					{{/each}}
+					
+					{{#each model.AssetTypes as |asset|}}
+					<tr>
+						<td>{{attribute-value asset.Attributes attributeName='Uniclass2015'}}</td>
+						<td>{{asset.Name}}</td>
+						<td>{{attribute-value asset.Attributes attributeName='Type'}}</td>
+						<td>{{responsibility asset.Attributes}}</td>
+						<td>{{asset.RequiredLOD.Code}}</td>
+						<td>{{asset.RequiredLOI.Code}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{/if}}
+</div>
